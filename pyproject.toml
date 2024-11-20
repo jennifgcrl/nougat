@@ -1,0 +1,70 @@
+[project]
+name = "nougat-ocr"
+dynamic = ["version"]
+description = "Nougat: Neural Optical Understanding for Academic Documents"
+readme = "README.md"
+authors = [{ name = "Lukas Blecher", email = "lblecher@meta.com" }]
+license = { text = "MIT" }
+requires-python = ">=3.7"
+classifiers = [
+  "Intended Audience :: Developers",
+  "Intended Audience :: Information Technology",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Software Development :: Libraries",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+  "transformers>=4.25.1",
+  "timm==0.5.4",
+  "orjson",
+  "opencv-python-headless",
+  "datasets[vision]",
+  "lightning>=2.0.0,<2022",
+  "nltk",
+  "python-Levenshtein",
+  "sentencepiece",
+  "sconf>=0.2.3",
+  "albumentations>=1.0.0",
+  "pypdf>=3.1.0",
+  "pypdfium2",
+]
+
+[project.optional-dependencies]
+api = ["fastapi", "uvicorn[standard]", "python-multipart"]
+dataset = [
+  "pytesseract",
+  "beautifulsoup4",
+  "scikit-learn",
+  "Pebble",
+  "pylatexenc",
+  "fuzzysearch",
+  "unidecode",
+  "htmlmin",
+  "pdfminer.six>=20221105",
+]
+
+[project.urls]
+Homepage = "https://github.com/facebookresearch/nougat"
+
+[project.scripts]
+nougat = "predict:main"
+nougat_api = "app:main"
+
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["predict", "app", "train", "test"]
+packages = { find = { exclude = ["result"] } }
+
+[tool.setuptools.dynamic]
+version = { attr = "nougat._version.__version__" }
